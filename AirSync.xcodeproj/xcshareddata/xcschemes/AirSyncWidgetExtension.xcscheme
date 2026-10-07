@@ -18,6 +18,7 @@
                BuildableIdentifier = "primary"
                BlueprintIdentifier = "B99D63F73059A794003D951A"
                BuildableName = "AirSyncWidgetExtension.appex"
+               BlueprintName = "AirSyncWidgetExtension"
                ReferencedContainer = "container:AirSync.xcodeproj">
             </BuildableReference>
          </BuildActionEntry>
@@ -31,6 +32,7 @@
                BuildableIdentifier = "primary"
                BlueprintIdentifier = "B9673B562E35A2A1006D284A"
                BuildableName = "AirSync.app"
+               BlueprintName = "AirSync"
                ReferencedContainer = "container:AirSync.xcodeproj">
             </BuildableReference>
          </BuildActionEntry>
@@ -64,6 +66,7 @@
             BuildableIdentifier = "primary"
             BlueprintIdentifier = "B99D63F73059A794003D951A"
             BuildableName = "AirSyncWidgetExtension.appex"
+            BlueprintName = "AirSyncWidgetExtension"
             ReferencedContainer = "container:AirSync.xcodeproj">
          </BuildableReference>
       </RemoteRunnable>
@@ -72,6 +75,7 @@
             BuildableIdentifier = "primary"
             BlueprintIdentifier = "B9673B562E35A2A1006D284A"
             BuildableName = "AirSync.app"
+            BlueprintName = "AirSync"
             ReferencedContainer = "container:AirSync.xcodeproj">
          </BuildableReference>
       </MacroExpansion>
@@ -107,6 +111,7 @@
             BuildableIdentifier = "primary"
             BlueprintIdentifier = "B9673B562E35A2A1006D284A"
             BuildableName = "AirSync.app"
+            BlueprintName = "AirSync"
             ReferencedContainer = "container:AirSync.xcodeproj">
          </BuildableReference>
       </BuildableProductRunnable>
