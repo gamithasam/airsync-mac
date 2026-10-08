@@ -144,6 +144,8 @@ extension WebSocketServer {
 
     // MARK: - Outgoing Requests
 
+    func requestHandoff() { sendMessage(type: "handoffRequest", data: [:]) }
+
     func sendDisconnectRequest() {
         sendMessage(type: "disconnectRequest", data: [:])
     }

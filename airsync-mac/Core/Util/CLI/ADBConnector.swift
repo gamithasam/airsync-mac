@@ -14,6 +14,20 @@ struct WiredADBDevice: Hashable, Identifiable {
     let model: String
 }
 
+private final class ScrcpyLaunchResult {
+    private let lock = NSLock()
+    private var completed = false
+    private let completion: ((Bool) -> Void)?
+    init(_ completion: ((Bool) -> Void)?) { self.completion = completion }
+    func finish(_ success: Bool) {
+        lock.lock()
+        guard !completed else { lock.unlock(); return }
+        completed = true
+        lock.unlock()
+        completion?(success)
+    }
+}
+
 struct ADBConnector {
 
     // Potential fallback paths
@@ -444,8 +458,10 @@ struct ADBConnector {
         port: UInt16,
         deviceName: String,
         desktop: Bool? = false,
-        package: String? = nil
+        package: String? = nil,
+        completion: ((Bool) -> Void)? = nil
     ) {
+        let result = ScrcpyLaunchResult(completion)
         let bitrate = AppState.shared.scrcpyBitrate
         let resolution = AppState.shared.scrcpyResolution
         let wiredAdbEnabled = AppState.shared.wiredAdbEnabled
@@ -463,7 +479,8 @@ struct ADBConnector {
             guard let scrcpyPath = findExecutable(named: "scrcpy", fallbackPaths: possibleScrcpyPaths) else {
                 DispatchQueue.main.async {
                     AppState.shared.adbConnectionResult = "scrcpy not found."
-                    presentScrcpyAlert(title: "scrcpy Not Found", informative: "AirSync couldn't find the scrcpy binary.")
+                    if completion == nil { presentScrcpyAlert(title: "scrcpy Not Found", informative: "AirSync couldn't find the scrcpy binary.") }
+                    result.finish(false)
                 }
                 return
             }
@@ -541,11 +558,12 @@ struct ADBConnector {
                     task.standardError = pipe
 
                     task.terminationHandler = { process in
+                        result.finish(false)
                         let data = pipe.fileHandleForReading.readDataToEndOfFile()
                         let output = String(data: data, encoding: .utf8) ?? ""
                         DispatchQueue.main.async {
                             AppState.shared.adbConnectionResult = "scrcpy exited:\n" + output
-                            if process.terminationStatus != 0 {
+                            if process.terminationStatus != 0 && completion == nil {
                                 let lower = output.lowercased()
                                 if lower.contains("unauthorized") || lower.contains("auth") || lower.contains("pair") {
                                     presentScrcpyPairingAlert(
@@ -561,7 +579,11 @@ struct ADBConnector {
 
                     do {
                         try task.run()
+                        DispatchQueue.global().asyncAfter(deadline: .now() + 1) {
+                            result.finish(task.isRunning)
+                        }
                     } catch {
+                        result.finish(false)
                         DispatchQueue.main.async {
                             AppState.shared.adbConnectionResult = "Failed to start scrcpy: \(error.localizedDescription)"
                         }

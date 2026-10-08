@@ -44,6 +44,12 @@ extension WebSocketServer {
             handleMediaControlResponse(message)
         case .appIcons:
             handleAppIcons(message)
+        case .handoffApp:
+            if let data = message.data.value as? [String: Any] {
+                DispatchQueue.main.async { HandoffManager.shared.receive(data) }
+            }
+        case .handoffUnavailable:
+            DispatchQueue.main.async { HandoffManager.shared.unavailable() }
         case .clipboardUpdate:
             handleClipboardUpdate(message)
         case .fileTransferInit:
@@ -109,6 +115,8 @@ extension WebSocketServer {
                 AppState.shared.activeMacIp = targetIp.trimmingCharacters(in: .whitespaces)
             }
 
+            let handoffVersion = dict["handoffVersion"] as? Int ?? 0
+            DispatchQueue.main.async { HandoffManager.shared.beginSession(version: handoffVersion) }
             let version = dict["version"] as? String ?? "2.0.0"
             let adbPorts = dict["adbPorts"] as? [String] ?? []
             let deviceId = dict["id"] as? String ?? ""
@@ -907,6 +915,7 @@ extension WebSocketServer {
         do {
             let jsonData = try JSONEncoder().encode(macInfo)
             if var jsonDict = try JSONSerialization.jsonObject(with: jsonData) as? [String: Any] {
+                jsonDict["handoffVersion"] = 1
                 jsonDict["model"] = modelId
                 jsonDict["type"] = categoryType
                 jsonDict["isPlus"] = isPlusSubscription

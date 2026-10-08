@@ -155,7 +155,10 @@ class WebSocketServer: ObservableObject {
         primarySessionID = nil
         stopPing()
         lock.unlock()
-        DispatchQueue.main.async { AppState.shared.webSocketStatus = .stopped }
+        DispatchQueue.main.async {
+            HandoffManager.shared.resetSession()
+            AppState.shared.webSocketStatus = .stopped
+        }
         stopNetworkMonitoring()
     }
 
@@ -247,6 +250,7 @@ class WebSocketServer: ObservableObject {
                 
                 if wasPrimary {
                     DispatchQueue.main.async {
+                        HandoffManager.shared.resetSession()
                         AppState.shared.disconnectDevice(manual: false)
                         ADBConnector.disconnectADB()
                         AppState.shared.adbConnected = false

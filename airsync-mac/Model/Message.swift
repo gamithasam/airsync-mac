@@ -19,6 +19,8 @@ enum MessageType: String, Codable {
     case macMediaControl
     case macMediaControlResponse
     case appIcons
+    case handoffApp
+    case handoffUnavailable
     case clipboardUpdate
     case callEvent = "call_event"
     case callProgress = "call_progress"

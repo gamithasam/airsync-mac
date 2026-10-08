@@ -5,6 +5,25 @@
 	};
 	objectVersion = 77;
 	objects = {
+		CA1100000000000000000001 = { isa = PBXFileReference; explicitFileType = wrapper.application; path = "AirSync Handoff.app"; sourceTree = BUILT_PRODUCTS_DIR; };
+		CA1100000000000000000002 = { isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AirSyncHandoff/main.swift; sourceTree = "<group>"; };
+		CA1100000000000000000003 = { isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = HandoffShared/HandoffIPC.swift; sourceTree = "<group>"; };
+		CA1100000000000000000004 = { isa = PBXBuildFile; fileRef = CA1100000000000000000002; };
+		CA1100000000000000000005 = { isa = PBXBuildFile; fileRef = CA1100000000000000000003; };
+		CA1100000000000000000006 = { isa = PBXBuildFile; fileRef = CA1100000000000000000003; };
+		CA1100000000000000000007 = { isa = PBXSourcesBuildPhase; buildActionMask = 2147483647; files = (CA1100000000000000000004, CA1100000000000000000006,); runOnlyForDeploymentPostprocessing = 0; };
+		CA1100000000000000000008 = { isa = PBXFrameworksBuildPhase; buildActionMask = 2147483647; files = (); runOnlyForDeploymentPostprocessing = 0; };
+		CA1100000000000000000009 = { isa = PBXResourcesBuildPhase; buildActionMask = 2147483647; files = (); runOnlyForDeploymentPostprocessing = 0; };
+		CA1100000000000000000012 = { isa = PBXBuildFile; fileRef = CA1100000000000000000001; settings = {ATTRIBUTES = (CodeSignOnCopy, RemoveHeadersOnCopy,);}; };
+		CA1100000000000000000011 = { isa = PBXCopyFilesBuildPhase; buildActionMask = 2147483647; dstPath = Contents/Helpers; dstSubfolderSpec = 1; files = (CA1100000000000000000012,); name = "Embed Handoff Helper"; runOnlyForDeploymentPostprocessing = 0; };
+		CA110000000000000000000F = { isa = PBXContainerItemProxy; containerPortal = B9673B4F2E35A2A1006D284A; proxyType = 1; remoteGlobalIDString = CA110000000000000000000A; remoteInfo = "AirSync Handoff"; };
+		CA1100000000000000000010 = { isa = PBXTargetDependency; target = CA110000000000000000000A; targetProxy = CA110000000000000000000F; };
+		CA110000000000000000000A = { isa = PBXNativeTarget; buildConfigurationList = CA110000000000000000000B; buildPhases = (CA1100000000000000000007, CA1100000000000000000008, CA1100000000000000000009,); buildRules = (); dependencies = (); name = "AirSync Handoff"; productName = "AirSync Handoff"; productReference = CA1100000000000000000001; productType = "com.apple.product-type.application"; };
+		CA110000000000000000000C = { isa = XCBuildConfiguration; buildSettings = { CODE_SIGN_STYLE = Automatic; DEVELOPMENT_TEAM = WCB4HTANA6; ENABLE_APP_SANDBOX = NO; ENABLE_HARDENED_RUNTIME = YES; GENERATE_INFOPLIST_FILE = YES; INFOPLIST_KEY_CFBundleDisplayName = "AirSync Handoff"; INFOPLIST_KEY_NSPrincipalClass = NSApplication; INFOPLIST_KEY_LSUIElement = NO; MACOSX_DEPLOYMENT_TARGET = 14.5; MARKETING_VERSION = 1.0; CURRENT_PROJECT_VERSION = 1; PRODUCT_BUNDLE_IDENTIFIER = "sameerasw.airsync-mac.handoff"; PRODUCT_NAME = "$(TARGET_NAME)"; SDKROOT = macosx; SKIP_INSTALL = YES; SWIFT_VERSION = 5.0; SWIFT_DEFAULT_ACTOR_ISOLATION = nonisolated; }; name = "Debug"; };
+		CA110000000000000000000D = { isa = XCBuildConfiguration; buildSettings = { CODE_SIGN_STYLE = Automatic; DEVELOPMENT_TEAM = WCB4HTANA6; ENABLE_APP_SANDBOX = NO; ENABLE_HARDENED_RUNTIME = YES; GENERATE_INFOPLIST_FILE = YES; INFOPLIST_KEY_CFBundleDisplayName = "AirSync Handoff"; INFOPLIST_KEY_NSPrincipalClass = NSApplication; INFOPLIST_KEY_LSUIElement = NO; MACOSX_DEPLOYMENT_TARGET = 14.5; MARKETING_VERSION = 1.0; CURRENT_PROJECT_VERSION = 1; PRODUCT_BUNDLE_IDENTIFIER = "sameerasw.airsync-mac.handoff"; PRODUCT_NAME = "$(TARGET_NAME)"; SDKROOT = macosx; SKIP_INSTALL = YES; SWIFT_VERSION = 5.0; SWIFT_DEFAULT_ACTOR_ISOLATION = nonisolated; }; name = "Release"; };
+		CA110000000000000000000E = { isa = XCBuildConfiguration; buildSettings = { CODE_SIGN_STYLE = Automatic; DEVELOPMENT_TEAM = WCB4HTANA6; ENABLE_APP_SANDBOX = NO; ENABLE_HARDENED_RUNTIME = YES; GENERATE_INFOPLIST_FILE = YES; INFOPLIST_KEY_CFBundleDisplayName = "AirSync Handoff"; INFOPLIST_KEY_NSPrincipalClass = NSApplication; INFOPLIST_KEY_LSUIElement = NO; MACOSX_DEPLOYMENT_TARGET = 14.5; MARKETING_VERSION = 1.0; CURRENT_PROJECT_VERSION = 1; PRODUCT_BUNDLE_IDENTIFIER = "sameerasw.airsync-mac.handoff"; PRODUCT_NAME = "$(TARGET_NAME)"; SDKROOT = macosx; SKIP_INSTALL = YES; SWIFT_VERSION = 5.0; SWIFT_DEFAULT_ACTOR_ISOLATION = nonisolated; }; name = "Self Compiled"; };
+		CA110000000000000000000B = { isa = XCConfigurationList; buildConfigurations = (CA110000000000000000000C, CA110000000000000000000D, CA110000000000000000000E,); defaultConfigurationIsVisible = 0; defaultConfigurationName = Release; };
+
 
 /* Begin PBXBuildFile section */
 		B94971602F62509A00F59BC9 /* BigInt in Frameworks */ = {isa = PBXBuildFile; productRef = B949715F2F62509A00F59BC9 /* BigInt */; };
@@ -142,6 +161,8 @@
 		B9673B4E2E35A2A1006D284A = {
 			isa = PBXGroup;
 			children = (
+				CA1100000000000000000002,
+				CA1100000000000000000003,
 				B99D64153059A9FC003D951A /* AirSyncWidgetExtension.entitlements */,
 				B99D64143059A9B3003D951A /* AirSync.entitlements */,
 				B9673B592E35A2A1006D284A /* airsync-mac */,
@@ -157,6 +178,7 @@
 			isa = PBXGroup;
 			children = (
 				B9673B572E35A2A1006D284A /* AirSync.app */,
+				CA1100000000000000000001,
 				B99D63F83059A794003D951A /* AirSyncWidgetExtension.appex */,
 			);
 			name = Products;
@@ -182,11 +204,13 @@
 				B9673B542E35A2A1006D284A /* Frameworks */,
 				B9673B552E35A2A1006D284A /* Resources */,
 				B99D640A3059A795003D951A /* Embed Foundation Extensions */,
+				CA1100000000000000000011,
 			);
 			buildRules = (
 			);
 			dependencies = (
 				B99D64083059A795003D951A /* PBXTargetDependency */,
+				CA1100000000000000000010,
 			);
 			fileSystemSynchronizedGroups = (
 				B9673B592E35A2A1006D284A /* airsync-mac */,
@@ -275,6 +299,7 @@
 			projectDirPath = "";
 			projectRoot = "";
 			targets = (
+				CA110000000000000000000A,
 				B9673B562E35A2A1006D284A /* AirSync */,
 				B99D63F73059A794003D951A /* AirSyncWidgetExtension */,
 			);
@@ -305,6 +330,7 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				CA1100000000000000000005,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};

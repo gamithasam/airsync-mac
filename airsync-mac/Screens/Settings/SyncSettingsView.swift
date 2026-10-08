@@ -10,6 +10,7 @@ import UserNotifications
 
 struct SyncSettingsView: View {
     @ObservedObject var appState = AppState.shared
+    @ObservedObject private var handoff = HandoffManager.shared
     @State private var showingPlusPopover = false
     @State private var showRemoteSheet = false
 
@@ -153,6 +154,18 @@ struct SyncSettingsView: View {
                                 Spacer()
                                 Toggle("", isOn: $appState.suppressAdbFailureAlerts)
                                     .toggleStyle(.switch)
+                            }
+                        }
+                        .padding()
+                        .glassBoxIfAvailable(radius: 18)
+
+                        headerSection(title: "App handoff", icon: "iphone.and.arrow.forward")
+                        VStack(alignment: .leading, spacing: 10) {
+                            SettingsToggleView(name: "Show app handoffs in the Dock", icon: "arrow.up.forward.app", isOn: $handoff.isEnabled)
+                            Text("Enable App handoff and grant Usage Access in AirSync on Android. Your last eligible app stays available until opened or disconnected. AirSync tries a Mac app, Android mirroring, then a website.")
+                                .font(.callout).foregroundStyle(.secondary)
+                            if let error = handoff.error {
+                                Text(error).font(.callout).foregroundStyle(.red)
                             }
                         }
                         .padding()

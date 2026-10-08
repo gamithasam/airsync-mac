@@ -17,7 +17,8 @@ final class AppDelegate: NSObject, NSApplicationDelegate {
 
     private var menuBarManager: MenuBarManager?
 
-    func applicationWillTerminate() {
+    func applicationWillTerminate(_ notification: Foundation.Notification) {
+        HandoffManager.shared.resetSession()
         AppState.shared.disconnectDevice()
         if AppState.shared.adbConnected {
             ADBConnector.disconnectADB()
@@ -34,6 +35,8 @@ final class AppDelegate: NSObject, NSApplicationDelegate {
         
         // Initialize Menu Bar Manager
         menuBarManager = MenuBarManager.shared
+
+        _ = HandoffManager.shared
 
         // Initialize Quick Share
         _ = QuickShareManager.shared
@@ -125,5 +128,4 @@ extension AppDelegate: NSWindowDelegate {
         }
     }
 }
-
 
