@@ -19,7 +19,7 @@ import Foundation
         let a = HandoffActivity(package: "a", name: "A", eventID: "session:1")
         let b = HandoffActivity(package: "b", name: "B", eventID: "session:2")
         precondition(memory.accept(a, eligible: true))
-        precondition(!memory.accept(b, eligible: false) && memory.current == a)
+        precondition(!memory.accept(b, eligible: false) && memory.current == nil)
         precondition(memory.accept(b, eligible: true))
         memory.consume(a.eventID) // Completing an older launch must preserve a newer tile.
         precondition(memory.current == b)

@@ -1,7 +1,7 @@
 import AppKit
 import Combine
 
-/// Owns the remembered handoff and routes launches. The Dock app only presents it.
+/// Owns the foreground app handoff and routes launches. The Dock app only presents it.
 final class HandoffManager: NSObject, ObservableObject {
     static let shared = HandoffManager()
     @Published var isEnabled = UserDefaults.standard.bool(forKey: "handoffEnabled") {
@@ -53,8 +53,11 @@ final class HandoffManager: NSObject, ObservableObject {
         guard isEnabled, peerSupported, AppState.shared.device != nil,
               let package = data["package"] as? String, !package.isEmpty, package.count < 256,
               let event = data["eventID"] as? String, !event.isEmpty, event.count < 128,
-              let name = data["displayName"] as? String, !name.isEmpty,
-              memory.accept(HandoffActivity(package: package, name: name, eventID: event), eligible: hasRoute(package)) else { return }
+              let name = data["displayName"] as? String, !name.isEmpty else { return }
+        guard memory.accept(HandoffActivity(package: package, name: name, eventID: event), eligible: hasRoute(package)) else {
+            clear()
+            return
+        }
         error = nil
         current = (package, HandoffDockState(eventID: event, appName: String(name.prefix(128)),
                    phoneName: AppState.shared.device?.name ?? "Phone", iconPNG: icon(package)))

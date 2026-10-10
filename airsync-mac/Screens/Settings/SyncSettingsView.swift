@@ -162,7 +162,7 @@ struct SyncSettingsView: View {
                         headerSection(title: "App handoff", icon: "iphone.and.arrow.forward")
                         VStack(alignment: .leading, spacing: 10) {
                             SettingsToggleView(name: "Show app handoffs in the Dock", icon: "arrow.up.forward.app", isOn: $handoff.isEnabled)
-                            Text("Enable App handoff and grant Usage Access in AirSync on Android. Your last eligible app stays available until opened or disconnected. AirSync tries a Mac app, Android mirroring, then a website.")
+                            Text("Enable App handoff and grant Usage Access in AirSync on Android. The Dock tile appears only while an eligible app is in the foreground on your unlocked phone. AirSync tries a Mac app, Android mirroring, then a website.")
                                 .font(.callout).foregroundStyle(.secondary)
                             if let error = handoff.error {
                                 Text(error).font(.callout).foregroundStyle(.red)

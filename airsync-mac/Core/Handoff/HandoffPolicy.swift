@@ -6,12 +6,12 @@ struct HandoffActivity: Equatable {
     let eventID: String
 }
 
-/// Session-only memory: ignored apps don't erase the last useful handoff.
+/// Session-only memory for the currently foreground app.
 struct HandoffMemory {
     private(set) var current: HandoffActivity?
     private var consumed = Set<String>()
     mutating func accept(_ activity: HandoffActivity, eligible: Bool) -> Bool {
-        guard eligible, !consumed.contains(activity.eventID) else { return false }
+        guard eligible, !consumed.contains(activity.eventID) else { current = nil; return false }
         current = activity
         return true
     }
