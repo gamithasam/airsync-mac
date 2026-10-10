@@ -4,6 +4,10 @@ set -euo pipefail
 mode="${1:-run}"
 case "$mode" in run|--build-only|--verify|--debug|--logs|--telemetry) ;; *) echo "Usage: $0 [--build-only|--verify|--debug|--logs|--telemetry]" >&2; exit 2 ;; esac
 task_root="$(cd "$(dirname "${BASH_SOURCE[0]}")/.." && pwd)"
+# Optional machine-local settings live in the Git-ignored build directory.
+if [[ -f "$task_root/.build/handoff-local.env" ]]; then
+    source "$task_root/.build/handoff-local.env"
+fi
 task_build="${AIRSYNC_DERIVED_DATA:-$task_root/.build/handoff}"
 task_configuration="${AIRSYNC_CONFIGURATION:-Self Compiled}"
 task_scheme="${AIRSYNC_SCHEME:-AirSync Self Compiled}"
